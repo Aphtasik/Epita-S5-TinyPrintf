@@ -1,4 +1,5 @@
 #include "tinyprintf.h"
+
 #include <stdio.h>
 
 int my_strlen(const char *str)

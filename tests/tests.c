@@ -63,7 +63,7 @@ Test(directive, char_unique)
 
 Test(directive, octal)
 {
-    int res = tinyprintf("Nb: %o\n", '7');
+    int res = tinyprintf("Nb: %o\n", 7);
     cr_assert_eq(res, 6, "GOT %o\n", res);
 }
 
@@ -71,6 +71,12 @@ Test(directive, string)
 {
     int res = tinyprintf("%s\n", "oui");
     cr_assert_eq(res, 4, "GOT %c\n", res);
+}
+
+Test(directive, hexa)
+{
+    int res = tinyprintf("Nb: %x\n", 7);
+    cr_assert_eq(res, 6, "GOT %x\n", res);
 }
 
 
