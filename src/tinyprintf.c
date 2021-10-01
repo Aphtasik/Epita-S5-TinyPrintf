@@ -70,17 +70,30 @@ int itaoi_handle_signed(int isSigned, int n, int base)
     return my_itoa_base(n, base);
 }
 
+int print_string(char *s)
+{
+    if (s == NULL)
+    {
+        fputs("(null)", stdout);
+        return 6;
+    }
+    else
+    {
+        fputs(s, stdout);
+        return my_strlen(s);
+    }
+}
+
 int tinyprintf(const char *format, ...)
 {
     if (!format)
     {
-        return 0; //TODO: Changer ce cas
+        return 0;
     }
 
     va_list ap;
     va_start(ap, format);
 
-    int s;
     int count = 0;
     int i = 0;
 
@@ -88,24 +101,26 @@ int tinyprintf(const char *format, ...)
     {
         if (format[i] == '%' && format[i + 1])
         {
-            s = va_arg(ap, int);
             switch (format[i + 1])
             {
+            case 's':
+                count += print_string(va_arg(ap, char*));
+                break;
             case 'x':
-                count+= itaoi_handle_signed(0, s, 16);
+                count+= itaoi_handle_signed(0, va_arg(ap, int), 16);
                 break;
             case 'o':
-                count+= itaoi_handle_signed(0, s, 8);
+                count+= itaoi_handle_signed(0, va_arg(ap, int), 8);
                 break;
             case 'c':
-                putchar(s);
+                putchar(va_arg(ap, int));
                 count++;
                 break;
             case 'u':
-                count+= itaoi_handle_signed(0, s, 10);
+                count+= itaoi_handle_signed(0, va_arg(ap, int), 10);
                 break;
             case 'd':
-                count+= itaoi_handle_signed(1, s, 10);
+                count+= itaoi_handle_signed(1, va_arg(ap, int), 10);
                 break;
             default:
                 putchar(format[i + 1]);
