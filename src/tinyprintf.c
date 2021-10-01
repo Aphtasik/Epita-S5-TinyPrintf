@@ -45,7 +45,7 @@ int my_itoa_base(int n, int base)
     while (n > 0)
     {
         s[i++] = convertToDec(n % base);
-        n/= base;
+        n /= base;
     }
     s[i] = '\0';
 
@@ -67,7 +67,7 @@ int my_itoa_base_unsigned(unsigned int n, int base)
     while (n > 0)
     {
         s[i++] = convertToDec(n % base);
-        n/= base;
+        n /= base;
     }
     s[i] = '\0';
 
@@ -78,7 +78,7 @@ int my_itoa_base_unsigned(unsigned int n, int base)
 
 int itoa_handle_signed(int n, int base)
 {
-    if ( n < 0)
+    if (n < 0)
     {
         n = -n;
         putchar('-');
@@ -121,23 +121,23 @@ int tinyprintf(const char *format, ...)
             switch (format[i + 1])
             {
             case 's':
-                count += print_string(va_arg(ap, char*));
+                count += print_string(va_arg(ap, char *));
                 break;
             case 'x':
-                count+= my_itoa_base_unsigned(va_arg(ap, int), 16);
+                count += my_itoa_base_unsigned(va_arg(ap, int), 16);
                 break;
             case 'o':
-                count+= my_itoa_base_unsigned(va_arg(ap, int), 8);
+                count += my_itoa_base_unsigned(va_arg(ap, int), 8);
                 break;
             case 'c':
                 putchar(va_arg(ap, int));
                 count++;
                 break;
             case 'u':
-                count+= my_itoa_base_unsigned(va_arg(ap, int), 10);
+                count += my_itoa_base_unsigned(va_arg(ap, int), 10);
                 break;
             case 'd':
-                count+= itoa_handle_signed(va_arg(ap, int), 10);
+                count += itoa_handle_signed(va_arg(ap, int), 10);
                 break;
             default:
                 putchar(format[i + 1]);
