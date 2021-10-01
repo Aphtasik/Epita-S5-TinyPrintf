@@ -34,6 +34,11 @@ void reverseString(char *s)
 
 int my_itoa_base(int n, int base)
 {
+    if (n == 0)
+    {
+        putchar('0');
+        return 1;
+    }
     char s[512];
     int i = 0;
 
@@ -47,6 +52,22 @@ int my_itoa_base(int n, int base)
     reverseString(s);
     fputs(s, stdout);
     return my_strlen(s);
+}
+
+int itaoi_handle_signed(int isSigned, int n, int base)
+{
+    if (isSigned == 1 && n < 0)
+    {
+        n = -n;
+        putchar('-');
+        return my_itoa_base(n, base) + 1;
+    }
+    else if (isSigned == 0 && n < 0)
+    {
+        n = -n;
+        return my_itoa_base(n, base);
+    }
+    return my_itoa_base(n, base);
 }
 
 int tinyprintf(const char *format, ...)
@@ -67,39 +88,31 @@ int tinyprintf(const char *format, ...)
     {
         if (format[i] == '%' && format[i + 1])
         {
+            s = va_arg(ap, int);
             switch (format[i + 1])
             {
             case 'x':
-                s = va_arg(ap, int);
-                count+= my_itoa_base(s, 16);
-                i++;
+                count+= itaoi_handle_signed(0, s, 16);
                 break;
             case 'o':
-                s = va_arg(ap, int);
-                count+= my_itoa_base(s, 8);
-                i++;
+                count+= itaoi_handle_signed(0, s, 8);
                 break;
             case 'c':
-                s = va_arg(ap, int);
-                fputc((s + '0'), stdout);
-                i+=1;
+                putchar(s);
+                count++;
                 break;
             case 'u':
-                s = va_arg(ap, int);
-                count+= my_itoa_base(s, 10);
-                i++;
+                count+= itaoi_handle_signed(0, s, 10);
                 break;
             case 'd':
-                s = va_arg(ap, int);
-                count+= my_itoa_base(s, 10);
-                i++;
+                count+= itaoi_handle_signed(1, s, 10);
                 break;
             default:
-                i++;
-                putchar(format[i]);
+                putchar(format[i + 1]);
                 count++;
                 break;
             }
+            i++;
         }
         else
         {
