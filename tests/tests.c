@@ -43,4 +43,16 @@ Test(directive, decimal_zero)
     cr_assert_eq(res, 6, "GOT %d\n", res);
 }
 
+Test(directive, decimal_char)
+{
+    int res = tinyprintf("Nb: %d\n", '*');
+    cr_assert_eq(res, 7, "GOT %d\n", res);
+}
+
+Test(directive, char_unique)
+{
+    int res = tinyprintf("Nb: %d\n", '*');
+    cr_assert_eq(res, 6, "GOT %d\n", res);
+}
+
 

@@ -58,16 +58,27 @@ int tinyprintf(const char *format, ...)
         {
             switch (format[i + 1])
             {
+            case 'c':
+                s = va_arg(ap, int);
+                putchar(s);
+                count++;
+                i+=1;
+                break;
+            case 'u':
+                s = va_arg(ap, unsigned);
+                count+= decimal(s);
+                i++;
+                break;
             case 'd':
-               s = va_arg(ap, int);
-               count+= decimal(s);
-               i++;
-               break;
+                s = va_arg(ap, int);
+                count+= decimal(s);
+                i++;
+                break;
             default:
                 i++;
                 putchar(format[i]);
                 count++;
-                break;        
+                break;
             }
         }
         else
