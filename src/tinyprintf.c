@@ -1,6 +1,43 @@
 #include "tinyprintf.h"
 #include <stdio.h>
 
+int decimal(int val)
+{
+    int count = 0;
+    int reversed = 0;
+    int remainder = 0;
+    char to_print;
+    
+    if (val == 0)
+    {
+        putchar('0');
+        return 1;
+    }
+    if (val < 0)
+    {
+        putchar('-');
+        val = -val;
+        count++;
+    }
+    
+    while (val != 0)
+    {
+        remainder = val % 10;
+        reversed = reversed * 10 + remainder;
+        val/= 10;
+    }
+
+    while (reversed != 0)
+    {
+        remainder = reversed % 10;
+        to_print = remainder + '0';
+        putchar(to_print);
+        reversed/= 10;
+        count++;
+    }
+    return count;
+}
+
 int tinyprintf(const char *format, ...)
 {
     if (!format)
@@ -10,7 +47,8 @@ int tinyprintf(const char *format, ...)
 
     va_list ap;
     va_start(ap, format);
-
+    
+    int s;
     int count = 0;
     int i = 0;
 
@@ -20,6 +58,11 @@ int tinyprintf(const char *format, ...)
         {
             switch (format[i + 1])
             {
+            case 'd':
+               s = va_arg(ap, int);
+               count+= decimal(s);
+               i++;
+               break;
             default:
                 i++;
                 putchar(format[i]);

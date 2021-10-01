@@ -21,12 +21,26 @@ Test(error, null)
 
 Test(directive, percent)
 {
-    int res = tinyprintf("1%%1");
-    cr_assert_eq(res, 3, "GOT %d\n", res);
+    int res = tinyprintf("1%%1\n");
+    cr_assert_eq(res, 4, "GOT %d\n", res);
 }
 
-Test(directive, percent_no_next_char)
+Test(directive, decimal_positive)
 {
-    int res = tinyprintf("1%");
-    cr_assert_eq(res, 0, "GOT %d\n", res);
+    int res = tinyprintf("Nb: %d\n", 42);
+    cr_assert_eq(res, 7, "GOT %d\n", res);
 }
+
+Test(directive, decimal_negative)
+{
+    int res = tinyprintf("Nb: %d\n", -42);
+    cr_assert_eq(res, 8, "GOT %d\n", res);
+}
+
+Test(directive, decimal_zero)
+{
+    int res = tinyprintf("Nb: %d\n", 0);
+    cr_assert_eq(res, 6, "GOT %d\n", res);
+}
+
+
